@@ -6,6 +6,7 @@ class Map:
 	def __init__(self):
 		self.name = "test"
 		self.load_map(self.name)
+		a = 2
 
 		
 
