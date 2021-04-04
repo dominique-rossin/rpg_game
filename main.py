@@ -21,7 +21,6 @@ clock.tick(fps)
 m = Map()
 
 player = player()
-player.draw()
 
 
 
@@ -35,7 +34,10 @@ bas = False
 gauche = False
 droite = False
 
+elapsed_time = 0
+
 while running:
+	elapsed_time += clock.tick(fps)
 
 	for event in pygame.event.get():
 		if event.type == pygame.KEYDOWN:
@@ -123,11 +125,17 @@ while running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			running = False
+
 	screen.fill((255,255,255))
 	m.draw(screen,5,5)
 
+
+	player.idle(screen)
+
 	if droite or gauche:
-		player.animate(screen)
+		if elapsed_time >= 100:
+			elapsed_time = 0
+			player.animate(screen)
 
 	pygame.display.flip()
 pygame.quit()

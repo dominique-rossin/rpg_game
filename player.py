@@ -20,17 +20,14 @@ class player:
 		pass
 
 	def idle(self, screen):
-		if self.loop == 0:
-			screen.blit(self.player_animation[self.loop])
-		else:
-			screen.blit(self.player_animation[self.loop-1])
+		screen.blit(self.player_animation[self.loop],(25,25))
 
 	def animate(self, screen):
 		self.loop +=1
-		if self.loop > len(self.player_animation):
+		if self.loop >= len(self.player_animation):
 			self.loop = 0
 
-		screen.blit(self.player_animation[self.loop-1],(25,25))
+		screen.blit(self.player_animation[self.loop],(25,25))
 
 
 
