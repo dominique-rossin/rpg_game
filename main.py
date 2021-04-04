@@ -3,7 +3,7 @@ from mymap import *
 from player import *
 
 pygame.init()
-longueur,largeur = 0,0
+longueur,largeur = 30,round(30*9/16)
 fps = 60
 screen = pygame.display.set_mode((longueur,largeur), pygame.FULLSCREEN)
 
@@ -130,12 +130,12 @@ while running:
 	m.draw(screen,5,5)
 
 
-	player.idle(screen)
+	player.idle(screen,x_limite*16,y_limite*16)
 
 	if droite or gauche:
 		if elapsed_time >= 100:
 			elapsed_time = 0
-			player.animate(screen)
+			player.animate(screen,x_limite*16,y_limite*16)
 
 	pygame.display.flip()
 pygame.quit()
