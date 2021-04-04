@@ -125,5 +125,9 @@ while running:
 			running = False
 	screen.fill((255,255,255))
 	m.draw(screen,5,5)
+
+	if droite or gauche:
+		player.animate(screen)
+
 	pygame.display.flip()
 pygame.quit()
