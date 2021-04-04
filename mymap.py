@@ -48,11 +48,11 @@ class Map:
 		pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile03.png'),(self.size*self.coefficient_largeur, self.size*self.coefficient_largeur)),pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile04.png'),(self.size*self.coefficient_largeur,self.size*self.coefficient_largeur))]
 
 
-	def scroll_x(self,dir):
-		self.x = dir
+	def scroll_x(self,dir,):
+		self.x += dir
 
-	def scroll_y(self,dir):
-		self.y = dir
+	def scroll_y(self,dir,):
+		self.y += dir
 
 	def draw(self, screen, center_x,center_y):
 		for i in range(center_x-10,center_x+10):

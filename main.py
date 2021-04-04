@@ -9,8 +9,8 @@ screen = pygame.display.set_mode((longueur,largeur), pygame.FULLSCREEN)
 
 longueur, largeur = pygame.display.Info().current_w, pygame.display.Info().current_h
 
-longueur_virtuelle = 400
-largeur_virtuelle = 225
+longueur_virtuelle = 30
+largeur_virtuelle = round(longueur_virtuelle*9/16)
 
 coefficient_longueur = round(longueur/longueur_virtuelle)
 coefficient_largeur = round(largeur/largeur_virtuelle)
@@ -27,7 +27,8 @@ player.draw()
 
 
 running = True
-player_x, player_y = 0,0
+player_x, player_y = longueur_virtuelle/2,largeur_virtuelle/2
+x_limite, y_limite = player_x, player_y
 
 haut = False
 bas = False
@@ -70,19 +71,54 @@ while running:
 			Fin = True
 
 	if haut:
+		y_limite -= 0.5
 		player_y -= 0.5
+		player_y_move = 0.5
 
 	if bas:
+		y_limite += 0.5
 		player_y += 0.5
+		player_y_move = -0.5
 
 	if gauche:
+		x_limite -= 0.5
 		player_x -= 0.5
+		player_x_move = 0.5
 
 	if droite:
+		x_limite += 0.5
 		player_x += 0.5
+		player_x_move = -0.5
 
-	m.scroll_x(player_x)
-	m.scroll_y(player_y)
+	if x_limite < longueur_virtuelle/4:
+		x_limite = longueur_virtuelle/4
+
+	if x_limite > (longueur_virtuelle/4)*3:
+		x_limite = (longueur_virtuelle/4)*3
+
+	if y_limite < largeur_virtuelle/4:
+		y_limite = largeur_virtuelle/4
+
+	if y_limite > (largeur_virtuelle/4)*3:
+		y_limite = (largeur_virtuelle/4)*3
+
+
+	if x_limite<=longueur_virtuelle/4:
+		if gauche:
+			m.scroll_x(player_x_move)
+
+	elif x_limite>=(longueur_virtuelle/4)*3:
+		if droite:
+			m.scroll_x(player_x_move)
+
+	if y_limite<=largeur_virtuelle/4:
+		if haut:
+			m.scroll_y(player_y_move)
+
+	elif y_limite>=(largeur_virtuelle/4)*3:
+		if bas:
+			m.scroll_y(player_y_move)
+
 
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
