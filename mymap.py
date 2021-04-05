@@ -1,60 +1,36 @@
 import pygame
+from random import *
 
 class Map:
 
 
 	def __init__(self):
 		self.longueur, self.largeur = pygame.display.Info().current_w, pygame.display.Info().current_h
-		self.longueur_virtuelle = 400
-		self.largeur_virtuelle = 225
-
-		self.coefficient_longueur = round(self.longueur/self.longueur_virtuelle)
-		self.coefficient_largeur = round(self.largeur/self.largeur_virtuelle)
-
+		self.zoom = 1
 		self.name = "test"
 		self.load_map(self.name)
 		self.x = 0
 		self.y = 0
-		a = 2
-
 		
 
+	def set_zoom(self,z):
+		self.zoom = z
+		if (z != int(z)):
+			self.zoom = int(z)+1
+		self.load_map(self.name)
+
 	def load_map(self,name):
-		self.mymap = [
-		[1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4],
-		[2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1],
-		[3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2],
-		[4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3],
-		[1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4],
-		[2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1],
-		[3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2],
-		[4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3],
-		[1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4],
-		[2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1],
-		[3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2],
-		[4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3],
-		[1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4],
-		[2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1],
-		[3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2],
-		[4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3],
-		[1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4],
-		[2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1],
-		[3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2],
-		[4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4,1,2,3],
-		]
+		self.mymap = [[randint(1,4) for i in range(200)] for j in range(200)]
 
-		self.size = round(self.largeur_virtuelle / len(self.mymap[0]))
-		self.tiles = [None, pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile01.png'),(self.size*self.coefficient_largeur,self.size*self.coefficient_largeur)), pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile02.png'),(self.size*self.coefficient_largeur,self.size*self.coefficient_largeur)),
-		pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile03.png'),(self.size*self.coefficient_largeur, self.size*self.coefficient_largeur)),pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile04.png'),(self.size*self.coefficient_largeur,self.size*self.coefficient_largeur))]
+		self.tiles = [None, pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile01.png'),(16*self.zoom,16*self.zoom)), pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile02.png'),(16*self.zoom,16*self.zoom)),
+		pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile03.png'),(16*self.zoom,16*self.zoom)),pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile04.png'),(16*self.zoom,16*self.zoom))]
 
 
-	def scroll_x(self,dir,):
-		self.x += dir
+	def draw(self, screen, x,y,longueur,largeur):
+		print("draw ",x,y,longueur,largeur,self.zoom)
+		for i in range(int(x),int(x)+longueur+3):
+			for j in range(int(y), int(y)+4+largeur):
 
-	def scroll_y(self,dir,):
-		self.y += dir
-
-	def draw(self, screen, center_x,center_y):
-		for i in range(center_x-10,center_x+10):
-			for j in range(center_y-10, center_y+10):
-				screen.blit(self.tiles[self.mymap[i][j]],(250-(center_x-i)*16+ self.x,250-(center_y-j)*16+self.y))
+				#print("i = ",i," ,j = ",j," , ",int((i-x)*16*self.zoom),int((j-y)*16*self.zoom))
+				if (i >=0 and j >-0 and i < len(self.mymap) and j < len(self.mymap[0])):
+					screen.blit(self.tiles[self.mymap[i][j]],(int((i-x)*16*self.zoom),int((j-y)*16*self.zoom)))

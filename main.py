@@ -1,33 +1,41 @@
 import pygame
 from mymap import *
 from player import *
+from random import *
+
 
 pygame.init()
-longueur,largeur = 30,round(30*9/16)
+
 fps = 60
-screen = pygame.display.set_mode((longueur,largeur), pygame.FULLSCREEN)
+zoom_ecran = 1
+longueur_virtuelle = 30
+largeur_virtuelle = round(longueur_virtuelle*9/16)
+deplacement_joueur = 0.1
+
+screen = pygame.display.set_mode((1920,1280), pygame.FULLSCREEN|pygame.DOUBLEBUF)
 
 longueur, largeur = pygame.display.Info().current_w, pygame.display.Info().current_h
 
-longueur_virtuelle = 30
-largeur_virtuelle = round(longueur_virtuelle*9/16)
 
-coefficient_longueur = round(longueur/longueur_virtuelle)
-coefficient_largeur = round(largeur/largeur_virtuelle)
+coefficient_longueur = int(longueur/longueur_virtuelle)
+coefficient_largeur = int(largeur/largeur_virtuelle)
+zoom_ecran = int(min(coefficient_largeur,coefficient_longueur)/16)
 
 clock = pygame.time.Clock()
 clock.tick(fps)
 
 m = Map()
+#print(zoom_ecran)
+m.set_zoom(zoom_ecran)
 
-player = player()
+player_x, player_y = longueur_virtuelle/2,largeur_virtuelle/2
 
-
+player = Player(zoom_ecran)
+player.set_pos(player_x,player_y)
 
 
 running = True
-player_x, player_y = longueur_virtuelle/2,largeur_virtuelle/2
-x_limite, y_limite = player_x, player_y
+screen_x,screen_y = 0,0
 
 haut = False
 bas = False
@@ -44,82 +52,49 @@ while running:
 
 			if event.key == pygame.K_UP:
 				haut = True
-
 			if event.key == pygame.K_DOWN:
 				bas = True
-
 			if event.key == pygame.K_LEFT:
 				gauche = True
-
 			if event.key == pygame.K_RIGHT:
 				droite = True
-
 		if event.type == pygame.KEYUP:
-
 			if event.key == pygame.K_UP:
 				haut = False
-
 			if event.key == pygame.K_DOWN:
 				bas = False
-
 			if event.key == pygame.K_LEFT:
 				gauche = False
-
 			if event.key == pygame.K_RIGHT:
 				droite = False
-						
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			Fin = True
 
 	if haut:
-		y_limite -= 0.5
-		player_y -= 0.5
-		player_y_move = 0.5
-
+		player.move(0,-deplacement_joueur)
 	if bas:
-		y_limite += 0.5
-		player_y += 0.5
-		player_y_move = -0.5
-
+		player.move(0,deplacement_joueur)
 	if gauche:
-		x_limite -= 0.5
-		player_x -= 0.5
-		player_x_move = 0.5
-
+		player.move(-deplacement_joueur,0)
 	if droite:
-		x_limite += 0.5
-		player_x += 0.5
-		player_x_move = -0.5
+		player.move(deplacement_joueur,0)
 
-	if x_limite < longueur_virtuelle/4:
-		x_limite = longueur_virtuelle/4
+	if player.x-screen_x <= longueur_virtuelle/4:
+		screen_x -= longueur_virtuelle/4-(player.x-screen_x)
+		screen_x = max(0,screen_x)
 
-	if x_limite > (longueur_virtuelle/4)*3:
-		x_limite = (longueur_virtuelle/4)*3
+	elif player.x-screen_x >=(longueur_virtuelle/4)*3:
+		screen_x += (player.x-screen_x)-longueur_virtuelle*3/4
+		screen_x = min(screen_x,longueur_virtuelle-1)
 
-	if y_limite < largeur_virtuelle/4:
-		y_limite = largeur_virtuelle/4
+	if player.y-screen_y<=largeur_virtuelle/4:
+		screen_y -= largeur_virtuelle/4-(player.y-screen_y)
+		screen_y = max(0,screen_y)
 
-	if y_limite > (largeur_virtuelle/4)*3:
-		y_limite = (largeur_virtuelle/4)*3
-
-
-	if x_limite<=longueur_virtuelle/4:
-		if gauche:
-			m.scroll_x(player_x_move)
-
-	elif x_limite>=(longueur_virtuelle/4)*3:
-		if droite:
-			m.scroll_x(player_x_move)
-
-	if y_limite<=largeur_virtuelle/4:
-		if haut:
-			m.scroll_y(player_y_move)
-
-	elif y_limite>=(largeur_virtuelle/4)*3:
-		if bas:
-			m.scroll_y(player_y_move)
+	elif player.y-screen_y>=(largeur_virtuelle/4)*3:
+		screen_y += player.y-screen_y-largeur_virtuelle*3/4
+		screen_y = min(screen_y,largeur_virtuelle)
 
 
 	for event in pygame.event.get():
@@ -127,15 +102,20 @@ while running:
 			running = False
 
 	screen.fill((255,255,255))
-	m.draw(screen,5,5)
+	m.draw(screen,screen_x,screen_y,longueur_virtuelle,largeur_virtuelle)
 
 
-	player.idle(screen,x_limite*16,y_limite*16)
+	#player.idle(screen,x_limite*16,y_limite*16)
 
-	if droite or gauche:
+	if droite or gauche or haut or bas:
 		if elapsed_time >= 100:
+			player.animate()
 			elapsed_time = 0
-			player.animate(screen,x_limite*16,y_limite*16)
+			#player.animate(screen,x_limite*16,y_limite*16)
+	else:
+		elapsed_time = 0
+	player.draw(screen,screen_x,screen_y)
+			
 
 	pygame.display.flip()
 pygame.quit()
