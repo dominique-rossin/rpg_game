@@ -28,6 +28,8 @@ class Player:
 	def move(self,dx,dy):
 		self.x += dx
 		self.y += dy
+
+
 		#print("joueur :",self.x," , ",self.y )
 
 

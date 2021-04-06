@@ -71,13 +71,16 @@ while running:
 			pygame.quit()
 			Fin = True
 
-	if haut:
+	if haut and not bas:
 		player.move(0,-deplacement_joueur)
-	if bas:
+
+	if bas and not haut:
 		player.move(0,deplacement_joueur)
-	if gauche:
+
+	if gauche and not droite:
 		player.move(-deplacement_joueur,0)
-	if droite:
+
+	if droite and not gauche:
 		player.move(deplacement_joueur,0)
 
 	if player.x-screen_x <= longueur_virtuelle/4:
@@ -107,7 +110,7 @@ while running:
 
 	#player.idle(screen,x_limite*16,y_limite*16)
 
-	if droite or gauche or haut or bas:
+	if droite and not gauche or gauche and not droite or haut and not bas or bas and not haut:
 		if elapsed_time >= 100:
 			player.animate()
 			elapsed_time = 0
