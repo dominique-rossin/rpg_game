@@ -4,6 +4,8 @@ class Player:
 
 
 	def __init__(self,z):
+		self.left = False
+		self.up = False
 		self.loop = 0
 		self.zoom = z
 		self.player_animation = [pygame.image.load('rpg-pack/chars/gabe/gabe-run1.png'),pygame.image.load('rpg-pack/chars/gabe/gabe-run2.png')
@@ -26,6 +28,17 @@ class Player:
 		pass
 
 	def move(self,dx,dy):
+
+		if dx < 0:
+			self.left = True
+		else:
+			self.left = False
+
+		if dy < 0:
+			self.up = False
+		else:
+			self.up = True
+
 		self.x += dx
 		self.y += dy
 
@@ -34,7 +47,13 @@ class Player:
 
 
 	def draw(self, screen,x,y):
-		screen.blit(pygame.transform.scale(self.player_animation[self.loop],(16*self.zoom,16*self.zoom)),(16*self.zoom*(self.x-x),16*self.zoom*(self.y-y)))
+
+		self.player_sprite_to_blit = pygame.transform.scale(self.player_animation[self.loop],(16*self.zoom,16*self.zoom))
+
+		if self.left:
+			screen.blit(pygame.transform.flip(self.player_sprite_to_blit,True,False),(16*self.zoom*(self.x-x),16*self.zoom*(self.y-y)))
+		else:
+			screen.blit(self.player_sprite_to_blit,(16*self.zoom*(self.x-x),16*self.zoom*(self.y-y)))
 		
 
 	def animate(self):
