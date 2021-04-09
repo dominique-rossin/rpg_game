@@ -22,8 +22,8 @@ class Map:
 	def load_map(self,name):
 		self.mymap = [[randint(1,4) for i in range(200)] for j in range(200)]
 
-		self.tiles = [None, pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile01.png'),(16*self.zoom,16*self.zoom)), pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile02.png'),(16*self.zoom,16*self.zoom)),
-		pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile03.png'),(16*self.zoom,16*self.zoom)),pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile04.png'),(16*self.zoom,16*self.zoom))]
+		self.tiles = [None, pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile01.png'),(16*self.zoom,16*self.zoom)).convert(), pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile02.png'),(16*self.zoom,16*self.zoom)).convert(),
+		pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile03.png'),(16*self.zoom,16*self.zoom)).convert(),pygame.transform.scale(pygame.image.load('rpg-pack/tiles/generic-rpg-tile04.png'),(16*self.zoom,16*self.zoom)).convert()]
 
 
 	def draw(self, screen, x,y,longueur,largeur):
