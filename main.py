@@ -2,6 +2,7 @@ import pygame
 from mymap import *
 from player import *
 from random import *
+from inventory import *
 
 
 pygame.init()
@@ -13,7 +14,7 @@ largeur_virtuelle = round(longueur_virtuelle*9/16)
 deplacement_joueur = 0.1
 
 screen = pygame.display.set_mode((1920,1280), pygame.FULLSCREEN|pygame.DOUBLEBUF)
-
+#screen2 = pygame.Surface((1920))
 longueur, largeur = pygame.display.Info().current_w, pygame.display.Info().current_h
 
 
@@ -27,6 +28,8 @@ clock.tick(fps)
 m = Map()
 #print(zoom_ecran)
 m.set_zoom(zoom_ecran)
+
+inventory = Inventory(zoom_ecran)
 
 player_x, player_y = longueur_virtuelle/2,largeur_virtuelle/2
 
@@ -58,6 +61,12 @@ while running:
 				gauche = True
 			if event.key == pygame.K_RIGHT:
 				droite = True
+			if event.key == pygame.K_e:
+				inventory.appeal()
+
+
+
+
 		if event.type == pygame.KEYUP:
 			if event.key == pygame.K_UP:
 				haut = False
@@ -118,6 +127,7 @@ while running:
 	else:
 		elapsed_time = 0
 	player.draw(screen,screen_x,screen_y)
+	inventory.draw(screen)
 			
 
 	pygame.display.flip()

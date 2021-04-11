@@ -1,6 +1,7 @@
 import pygame
 from random import *
 
+
 class Map:
 
 
