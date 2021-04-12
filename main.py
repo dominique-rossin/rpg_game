@@ -126,6 +126,11 @@ while running:
 			#player.animate(screen,x_limite*16,y_limite*16)
 	else:
 		elapsed_time = 0
+
+#	inventory.change_inventory("sword",5)
+#	if inventory.check_invetory("sword",31):
+#		print("test concluant")
+
 	player.draw(screen,screen_x,screen_y)
 	inventory.draw(screen)
 			
