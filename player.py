@@ -12,6 +12,9 @@ class Player:
 		,pygame.image.load('rpg-pack/chars/gabe/gabe-run3.png'),pygame.image.load('rpg-pack/chars/gabe/gabe-run4.png'),
 		pygame.image.load('rpg-pack/chars/gabe/gabe-run5.png'),pygame.image.load('rpg-pack/chars/gabe/gabe-run6.png'),
 		pygame.image.load('rpg-pack/chars/gabe/gabe-run7.png')]
+
+		for i in range(len(self.player_animation)):
+			self.player_animation[i] = pygame.transform.scale(self.player_animation[i],(16*self.zoom,16*self.zoom)).convert_alpha()
 		self.health = 20
 		self.hunger = 0
 		self.x = 0
@@ -48,7 +51,7 @@ class Player:
 
 	def draw(self, screen,x,y):
 
-		self.player_sprite_to_blit = pygame.transform.scale(self.player_animation[self.loop],(16*self.zoom,16*self.zoom))
+		self.player_sprite_to_blit = self.player_animation[self.loop]
 
 		if self.left:
 			screen.blit(pygame.transform.flip(self.player_sprite_to_blit,True,False),(16*self.zoom*(self.x-x),16*self.zoom*(self.y-y)))

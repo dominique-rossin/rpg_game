@@ -4,7 +4,7 @@ class Inventory:
 	def __init__(self,zoom_ecran):
 		self.zoom = zoom_ecran
 		self.isvisible = False
-		self.empty_inventory = pygame.transform.scale(pygame.image.load('rpg-pack/UI/generic-rpg-ui-inventario.png'),(450*self.zoom,350*self.zoom))
+		self.empty_inventory = pygame.transform.scale(pygame.image.load('rpg-pack/UI/generic-rpg-ui-inventario.png'),(450*self.zoom,350*self.zoom)).convert_alpha()
 		self.item_inventory = dict()
 
 	def appeal(self):
