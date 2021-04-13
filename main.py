@@ -36,6 +36,8 @@ player_x, player_y = longueur_virtuelle/2,largeur_virtuelle/2
 player = Player(zoom_ecran)
 player.set_pos(player_x,player_y)
 
+inventory_pause = False
+
 
 running = True
 screen_x,screen_y = 0,0
@@ -50,70 +52,80 @@ elapsed_time = 0
 while running:
 	elapsed_time += clock.tick(fps)
 
-	for event in pygame.event.get():
-		if event.type == pygame.KEYDOWN:
+	print(inventory.check_open())
 
-			if event.key == pygame.K_UP:
-				haut = True
-			if event.key == pygame.K_DOWN:
-				bas = True
-			if event.key == pygame.K_LEFT:
-				gauche = True
-			if event.key == pygame.K_RIGHT:
-				droite = True
-			if event.key == pygame.K_e:
-				inventory.appeal()
+	if inventory.check_open() == False:
+		for event in pygame.event.get():
+			if event.type == pygame.KEYDOWN:
 
-
-
-
-		if event.type == pygame.KEYUP:
-			if event.key == pygame.K_UP:
-				haut = False
-			if event.key == pygame.K_DOWN:
-				bas = False
-			if event.key == pygame.K_LEFT:
-				gauche = False
-			if event.key == pygame.K_RIGHT:
-				droite = False
-		if event.type == pygame.QUIT:
-			pygame.quit()
-			Fin = True
-
-	if haut and not bas:
-		player.move(0,-deplacement_joueur)
-
-	if bas and not haut:
-		player.move(0,deplacement_joueur)
-
-	if gauche and not droite:
-		player.move(-deplacement_joueur,0)
-
-	if droite and not gauche:
-		player.move(deplacement_joueur,0)
-
-	if player.x-screen_x <= longueur_virtuelle/4:
-		screen_x -= longueur_virtuelle/4-(player.x-screen_x)
-		screen_x = max(0,screen_x)
-
-	elif player.x-screen_x >=(longueur_virtuelle/4)*3:
-		screen_x += (player.x-screen_x)-longueur_virtuelle*3/4
-		screen_x = min(screen_x,longueur_virtuelle-1)
-
-	if player.y-screen_y<=largeur_virtuelle/4:
-		screen_y -= largeur_virtuelle/4-(player.y-screen_y)
-		screen_y = max(0,screen_y)
-
-	elif player.y-screen_y>=(largeur_virtuelle/4)*3:
-		screen_y += player.y-screen_y-largeur_virtuelle*3/4
-		screen_y = min(screen_y,largeur_virtuelle)
+				if event.key == pygame.K_UP:
+					haut = True
+				if event.key == pygame.K_DOWN:
+					bas = True
+				if event.key == pygame.K_LEFT:
+					gauche = True
+				if event.key == pygame.K_RIGHT:
+					droite = True
+				if event.key == pygame.K_e:
+					inventory.appeal()
 
 
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			running = False
+			if event.type == pygame.KEYUP:
+				if event.key == pygame.K_UP:
+					haut = False
+				if event.key == pygame.K_DOWN:
+					bas = False
+				if event.key == pygame.K_LEFT:
+					gauche = False
+				if event.key == pygame.K_RIGHT:
+					droite = False
+			if event.type == pygame.QUIT:
+				running = False
+
+		if haut and not bas:
+			player.move(0,-deplacement_joueur)
+
+		if bas and not haut:
+			player.move(0,deplacement_joueur)
+
+		if gauche and not droite:
+			player.move(-deplacement_joueur,0)
+
+		if droite and not gauche:
+			player.move(deplacement_joueur,0)
+
+		if player.x-screen_x <= longueur_virtuelle/4:
+			screen_x -= longueur_virtuelle/4-(player.x-screen_x)
+			screen_x = max(0,screen_x)
+
+		elif player.x-screen_x >=(longueur_virtuelle/4)*3:
+			screen_x += (player.x-screen_x)-longueur_virtuelle*3/4
+			screen_x = min(screen_x,longueur_virtuelle-1)
+
+		if player.y-screen_y<=largeur_virtuelle/4:
+			screen_y -= largeur_virtuelle/4-(player.y-screen_y)
+			screen_y = max(0,screen_y)
+
+		elif player.y-screen_y>=(largeur_virtuelle/4)*3:
+			screen_y += player.y-screen_y-largeur_virtuelle*3/4
+			screen_y = min(screen_y,largeur_virtuelle)
+
+
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				running = False
+	else:
+		for event in pygame.event.get():
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_e:
+					inventory.appeal()
+			if event.type == pygame.QUIT:
+				running = False
+
+
 
 	screen.fill((255,255,255))
+
 	m.draw(screen,screen_x,screen_y,longueur_virtuelle,largeur_virtuelle)
 
 

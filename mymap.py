@@ -28,7 +28,7 @@ class Map:
 
 
 	def draw(self, screen, x,y,longueur,largeur):
-		print("draw ",x,y,longueur,largeur,self.zoom)
+		#print("draw ",x,y,longueur,largeur,self.zoom)
 		for i in range(int(x),int(x)+longueur+3):
 			for j in range(int(y), int(y)+4+largeur):
 

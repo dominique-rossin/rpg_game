@@ -7,6 +7,12 @@ class Inventory:
 		self.empty_inventory = pygame.transform.scale(pygame.image.load('rpg-pack/UI/generic-rpg-ui-inventario.png'),(450*self.zoom,350*self.zoom)).convert_alpha()
 		self.item_inventory = dict()
 
+	def check_open(self):
+		if self.isvisible:
+			return True
+		else:
+			return False
+
 	def appeal(self):
 		if self.isvisible:
 			self.isvisible = False
