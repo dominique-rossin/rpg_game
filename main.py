@@ -49,6 +49,8 @@ droite = False
 
 elapsed_time = 0
 
+#inventory.change_inventory("sword",1)
+
 inventory.change_inventory("sword",1)
 
 while running:
@@ -117,6 +119,7 @@ while running:
 			if event.type == pygame.QUIT:
 				running = False
 	else:
+		haut,bas,gauche,droite = False, False, False, False
 		for event in pygame.event.get():
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_e:
