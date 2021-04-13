@@ -6,6 +6,8 @@ class Inventory:
 		self.isvisible = False
 		self.empty_inventory = pygame.transform.scale(pygame.image.load('rpg-pack/UI/generic-rpg-ui-inventario.png'),(450*self.zoom,350*self.zoom)).convert_alpha()
 		self.item_inventory = dict()
+		self.case_coordonnes = [(100,100)]
+		self.item_images = {"sword":pygame.image.load('rpg-pack/props n decorations/generic-rpg-loot01.png').convert()}
 
 	def check_open(self):
 		if self.isvisible:
@@ -22,6 +24,12 @@ class Inventory:
 	def draw(self,screen):
 		if self.isvisible:
 			screen.blit(self.empty_inventory,(10*self.zoom,10*self.zoom))
+			self.items = list(self.item_inventory.keys())
+			print(self.items)
+			for i in range(len(self.items)):
+				if self.items[i] in self.item_images:
+					screen.blit(self.item_images[i],self.case_coordonnes[i])
+
 
 	def change_inventory(self,object_to_add,quantity):
 

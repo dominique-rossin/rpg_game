@@ -49,6 +49,8 @@ droite = False
 
 elapsed_time = 0
 
+inventory.change_inventory("sword",1)
+
 while running:
 	elapsed_time += clock.tick(fps)
 
