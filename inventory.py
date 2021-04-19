@@ -26,12 +26,14 @@ class Inventory:
 			screen.blit(self.empty_inventory,(10*self.zoom,10*self.zoom))
 			self.items = list(self.item_inventory.keys())
 
-			print(self.items)
+			#print(self.items)
 			for i in range(len(self.items)):
 				if self.items[i] in self.item_images:
 					try:
 						screen.blit(self.item_images[self.items[i]],self.case_coordonnes[i])
-
+						break
+					except Valuerroor:
+						pass
 
 	def change_inventory(self,object_to_add,quantity):
 
@@ -39,7 +41,7 @@ class Inventory:
 			self.item_inventory[object_to_add] += quantity
 		else:
 			self.item_inventory[object_to_add] = quantity
-		print(self.item_inventory)
+		#print(self.item_inventory)
 
 	def check_invetory(self,object_to_check,quantity):
 		if (object_to_check in self.item_inventory):

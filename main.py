@@ -13,14 +13,20 @@ longueur_virtuelle = 30
 largeur_virtuelle = round(longueur_virtuelle*9/16)
 deplacement_joueur = 0.1
 
-screen = pygame.display.set_mode((1920,1280), pygame.FULLSCREEN|pygame.DOUBLEBUF)
+#screen = pygame.display.set_mode((1280,720), pygame.FULLSCREEN|pygame.DOUBLEBUF)
+screen = pygame.display.set_mode((1280,720), pygame.DOUBLEBUF)
 #screen2 = pygame.Surface((1920))
 longueur, largeur = pygame.display.Info().current_w, pygame.display.Info().current_h
-
+print(longueur," ",largeur)
 
 coefficient_longueur = int(longueur/longueur_virtuelle)
 coefficient_largeur = int(largeur/largeur_virtuelle)
 zoom_ecran = int(min(coefficient_largeur,coefficient_longueur)/16)
+
+longueur_virtuelle = int(longueur / 16/ zoom_ecran)+1
+largeur_virtuelle = int(largeur / 16 / zoom_ecran)+1
+
+print("Zoom : ",zoom_ecran)
 
 clock = pygame.time.Clock()
 clock.tick(fps)
@@ -56,7 +62,7 @@ inventory.change_inventory("sword",1)
 while running:
 	elapsed_time += clock.tick(fps)
 
-	print(inventory.check_open())
+	#print(inventory.check_open())
 
 	if inventory.check_open() == False:
 		for event in pygame.event.get():
