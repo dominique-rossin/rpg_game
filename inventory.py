@@ -6,7 +6,7 @@ class Inventory:
 		self.isvisible = False
 		self.empty_inventory = pygame.transform.scale(pygame.image.load('rpg-pack/UI/generic-rpg-ui-inventario.png'),(450*self.zoom,350*self.zoom)).convert_alpha()
 		self.item_inventory = dict()
-		self.case_coordonnes = [(225,350)]
+		self.case_coordonnes = [(110,385), (260,385),(420,385),(110,530), (260,530),(420,530)]
 		self.item_images = {"sword":pygame.transform.scale(pygame.image.load('rpg-pack/props n decorations/generic-rpg-loot01.png'),(45*self.zoom,45*self.zoom)).convert_alpha()}
 
 	def check_open(self):
