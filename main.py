@@ -133,6 +133,9 @@ while running:
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_e:
 					inventory.appeal()
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				x,y = event.pos
+				inventory.check_arrow(x,y)
 			if event.type == pygame.QUIT:
 				running = False
 

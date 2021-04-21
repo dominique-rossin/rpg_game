@@ -6,11 +6,14 @@ class Inventory:
 		self.isvisible = False
 		self.empty_inventory = pygame.transform.scale(pygame.image.load('rpg-pack/UI/generic-rpg-ui-inventario.png'),(450*self.zoom,350*self.zoom)).convert_alpha()
 		self.item_inventory = dict()
+		self.right_arrow = pygame.transform.scale(pygame.image.load('rpg-pack/props n decorations/arrow_inventory.png'),(45*self.zoom,45*self.zoom)).convert_alpha()
+		self.left_arrow = pygame.transform.flip(self.right_arrow,True,False)
 		self.case_coordonnes = [(110,385), (260,385),(420,385),(110,530), (260,530),(420,530)]
 		self.item_images = {"sword":pygame.transform.scale(pygame.image.load('rpg-pack/props n decorations/generic-rpg-loot01.png'),(45*self.zoom,45*self.zoom)).convert_alpha(),
 		"shield":pygame.transform.scale(pygame.image.load('rpg-pack/props n decorations/generic-rpg-loot02.png'),(45*self.zoom,45*self.zoom)).convert_alpha(),
 		"heal_potion":pygame.transform.scale(pygame.image.load('rpg-pack/props n decorations/generic-rpg-loot03.png'),(45*self.zoom,45*self.zoom)).convert_alpha(),
 		"mana_potion":pygame.transform.scale(pygame.image.load('rpg-pack/props n decorations/generic-rpg-loot04.png'),(45*self.zoom,45*self.zoom)).convert_alpha()}
+		self.inventory_start = 0
 
 	def check_open(self):
 		if self.isvisible:
@@ -33,10 +36,12 @@ class Inventory:
 			for i in range(len(self.items)):
 				if self.items[i] in self.item_images:
 					try:
-						screen.blit(self.item_images[self.items[i]],self.case_coordonnes[i])
-					except Valuerroor:
+						screen.blit(self.item_images[self.items[i+inventory_start]],self.case_coordonnes[i])
+					except :
 						print("error")
 						pass
+			screen.blit(self.right_arrow,(750,600))
+			screen.blit(self.left_arrow,(50,600))
 
 	def change_inventory(self,object_to_add,quantity):
 
@@ -54,4 +59,12 @@ class Inventory:
 				return False
 		else:
 			return False
+
+	def check_arrow(self,x,y):
+		if self.inventory_start >0:
+			if self.left_arrow.get_rect().collidepoint(x,y):
+				self.inventory_start -= 6
+		if self.right_arrow.get_rect().collidepoint(x,y):
+			self.inventory_start += 6
+
 
