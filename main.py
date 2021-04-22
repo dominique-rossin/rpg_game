@@ -9,22 +9,25 @@ pygame.init()
 
 fps = 60
 zoom_ecran = 1
-longueur_virtuelle = 30
-largeur_virtuelle = round(longueur_virtuelle*9/16)
 deplacement_joueur = 0.1
+resolution_ecran = (1280,720)
+longueur_virtuelle = 30
+tile_size = 16
+largeur_virtuelle = round(longueur_virtuelle*resolution_ecran[1]/resolution_ecran[0])
 
 #screen = pygame.display.set_mode((1280,720), pygame.FULLSCREEN|pygame.DOUBLEBUF)
-screen = pygame.display.set_mode((1280,720), pygame.DOUBLEBUF)
+screen = pygame.display.set_mode(resolution_ecran, pygame.DOUBLEBUF)
 #screen2 = pygame.Surface((1920))
 longueur, largeur = pygame.display.Info().current_w, pygame.display.Info().current_h
 print(longueur," ",largeur)
 
 coefficient_longueur = int(longueur/longueur_virtuelle)
 coefficient_largeur = int(largeur/largeur_virtuelle)
-zoom_ecran = int(min(coefficient_largeur,coefficient_longueur)/16)
+print("coefs long/larg ",coefficient_longueur," ",coefficient_largeur)
+zoom_ecran = int(min(coefficient_largeur,coefficient_longueur)/tile_size)
 
-longueur_virtuelle = int(longueur / 16/ zoom_ecran)+1
-largeur_virtuelle = int(largeur / 16 / zoom_ecran)+1
+longueur_virtuelle = int(longueur / (tile_size* zoom_ecran))+1
+largeur_virtuelle = int(largeur / (tile_size * zoom_ecran))+1
 
 print("Zoom : ",zoom_ecran)
 
