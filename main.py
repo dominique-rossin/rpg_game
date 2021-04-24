@@ -3,6 +3,7 @@ from mymap import *
 from player import *
 from random import *
 from inventory import *
+from enemy import *
 
 
 pygame.init()
@@ -64,6 +65,19 @@ inventory.change_inventory("sword",1)
 inventory.change_inventory("shield",1)
 inventory.change_inventory("heal_potion",1)
 inventory.change_inventory("mana_potion",1)
+
+enemies = pygame.sprite.Group()
+
+enemy = Enemy(zoom_ecran,'slime-blue',tile_size,enemies)
+enemy = Enemy(zoom_ecran,'slime-blue',tile_size,enemies)
+enemy = Enemy(zoom_ecran,'slime-blue',tile_size,enemies)
+enemy = Enemy(zoom_ecran,'slime-blue',tile_size,enemies)
+enemy = Enemy(zoom_ecran,'slime-blue',tile_size,enemies)
+enemy = Enemy(zoom_ecran,'worm-run-idle',tile_size,enemies)
+enemy = Enemy(zoom_ecran,'worm-run-idle',tile_size,enemies)
+enemy = Enemy(zoom_ecran,'worm-run-idle',tile_size,enemies)
+
+
 
 while running:
 	elapsed_time += clock.tick(fps)
@@ -152,18 +166,18 @@ while running:
 	#player.idle(screen,x_limite*16,y_limite*16)
 
 	if droite and not gauche or gauche and not droite or haut and not bas or bas and not haut:
-		if elapsed_time >= 100:
-			player.animate()
-			elapsed_time = 0
-			#player.animate(screen,x_limite*16,y_limite*16)
-	else:
-		elapsed_time = 0
+		player.animate(elapsed_time)
+
+	for enemy in enemies.sprites():
+		enemy.animate(elapsed_time)
+		enemy.draw(screen,screen_x,screen_y)
 
 #	inventory.change_inventory("sword",5)
 #	if inventory.check_invetory("sword",31):
 #		print("test concluant")
 
 	player.draw(screen,screen_x,screen_y)
+
 	inventory.draw(screen)
 			
 

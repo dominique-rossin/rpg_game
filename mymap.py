@@ -29,8 +29,8 @@ class Map:
 
 	def draw(self, screen, x,y,longueur,largeur):
 		#print("draw ",x,y,longueur,largeur,self.zoom) # premier appel 0 0 41 23 2
-		for i in range(int(x),int(x)+longueur):
-			for j in range(int(y), int(y)+largeur):
+		for i in range(int(x),int(x)+longueur+1):
+			for j in range(int(y), int(y)+largeur+1):
 
 				#print("i = ",i," ,j = ",j," , ",int((i-x)*16*self.zoom),int((j-y)*16*self.zoom))
 				if (i >=0 and j >=0 and i < len(self.mymap) and j < len(self.mymap[0])):

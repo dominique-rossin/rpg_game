@@ -19,6 +19,9 @@ class Player:
 		self.hunger = 0
 		self.x = 0
 		self.y = 0
+		self.animation_speed = 150
+		self.elapsed_time = 0
+
 		
 
 
@@ -59,10 +62,12 @@ class Player:
 			screen.blit(self.player_sprite_to_blit,(16*self.zoom*(self.x-x),16*self.zoom*(self.y-y)))
 		
 
-	def animate(self):
-		self.loop +=1
-		if self.loop >= len(self.player_animation):
-			self.loop = 0
+	def animate(self,elapsed_time):
+		if (elapsed_time - self.elapsed_time > self.animation_speed):
+			self.loop +=1
+			if self.loop >= len(self.player_animation):
+				self.loop = 0
+			self.elapsed_time = elapsed_time
 
 		#screen.blit(self.player_animation[self.loop],(player_x,player_y))
 
