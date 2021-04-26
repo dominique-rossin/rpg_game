@@ -33,7 +33,7 @@ class Inventory:
 			screen.blit(self.empty_inventory,(10*self.zoom,10*self.zoom))
 			for item in self.item_inventory.keys():
 				if item in self.item_images:
-					screen.blit(self.item_images[item],self.case_coordonnes[i])
+					screen.blit(self.item_images[item],self.case_coordonnes[i + self.inventory_start])
 					i += 1
 			#self.items = list(self.item_inventory.keys())
 			screen.blit(self.right_arrow,(750,600))
@@ -57,11 +57,9 @@ class Inventory:
 		else:
 			return False
 
-	def check_arrow(self,x,y):
-		if self.inventory_start >0:
-			if self.left_arrow.get_rect().collidepoint(x,y):
-				self.inventory_start -= 6
-		if self.right_arrow.get_rect().collidepoint(x,y):
-			self.inventory_start += 6
+	def check_arrow(self,modifieur):
+		if self.inventory_start + modifieur >= 0:
+			self.inventory_start += modifieur
+			
 
 

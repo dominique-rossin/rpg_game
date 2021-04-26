@@ -149,6 +149,14 @@ while running:
 		haut,bas,gauche,droite = False, False, False, False
 		for event in pygame.event.get():
 			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_UP:
+					inventory.check_arrow(-3)
+				if event.key == pygame.K_DOWN:
+					inventory.check_arrow(3)
+				if event.key == pygame.K_LEFT:
+					inventory.check_arrow(1)
+				if event.key == pygame.K_RIGHT:
+					inventory.check_arrow(-1)
 				if event.key == pygame.K_e:
 					inventory.appeal()
 			if event.type == pygame.MOUSEBUTTONDOWN:
