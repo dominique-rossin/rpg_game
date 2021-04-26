@@ -1,5 +1,6 @@
 import pygame
 from mymap import *
+import sys
 from player import *
 from random import *
 from inventory import *
@@ -72,7 +73,7 @@ enemy = Enemy(zoom_ecran,'slime-blue',tile_size,enemies)
 enemy = Enemy(zoom_ecran,'slime-blue',tile_size,enemies)
 enemy = Enemy(zoom_ecran,'slime-blue',tile_size,enemies)
 enemy = Enemy(zoom_ecran,'slime-blue',tile_size,enemies)
-enemy = Enemy(zoom_ecran,'slime-blue',tile_size,enemies)
+enemyorange = Enemy(zoom_ecran,'slime-orange',tile_size,enemies)
 enemy = Enemy(zoom_ecran,'worm-run-idle',tile_size,enemies)
 enemy = Enemy(zoom_ecran,'worm-run-idle',tile_size,enemies)
 enemy = Enemy(zoom_ecran,'worm-run-idle',tile_size,enemies)
@@ -177,6 +178,9 @@ while running:
 #		print("test concluant")
 
 	player.draw(screen,screen_x,screen_y)
+	collision = pygame.sprite.collide_rect(player, enemyorange)
+	if (collision):
+		sys.exit()
 
 	inventory.draw(screen)
 			

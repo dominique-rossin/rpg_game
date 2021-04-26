@@ -24,10 +24,11 @@ class Enemy(pygame.sprite.Sprite):
 		self.spriteSheet = pygame.transform.scale(pygame.image.load('rpg-pack/mobs/'+self.enemy[0]),(16*self.zoom*self.nb_images_anim,16*self.zoom)).convert_alpha()
 		self.sprite_size = self.enemy[2]*zoom_ecran
 		self.sprite = self.spriteSheet.subsurface(pygame.Rect(0,0,self.sprite_size,self.sprite_size))
+		self.rect = self.sprite.get_rect()
 		self.PV = self.enemy[3]
 		self.x = random.randrange(0,30)
 		self.y  = random.randrange(0,20)
-		print(self.x,"   ",self.y)
+		#print(self.x,"   ",self.y)
 		self.loop = 0
 		self.visible = True
 		self.animation_speed = 100
@@ -43,5 +44,7 @@ class Enemy(pygame.sprite.Sprite):
 			self.sprite = self.spriteSheet.subsurface(pygame.Rect(self.loop*self.sprite_size,0,self.sprite_size,self.sprite_size))
 
 	def draw(self, screen,x,y):
-
-		screen.blit(self.sprite,(self.tile_size*self.zoom*(self.x-x),self.tile_size*self.zoom*(self.y-y)))
+		self.rect.x = self.tile_size*self.zoom*(self.x-x)
+		self.rect.y = self.tile_size*self.zoom*(self.y-y)
+#		screen.blit(self.sprite,(self.tile_size*self.zoom*(self.x-x),self.tile_size*self.zoom*(self.y-y)))
+		screen.blit(self.sprite,self.rect)
